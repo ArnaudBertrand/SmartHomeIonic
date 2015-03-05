@@ -1,0 +1,37 @@
+.status-change .bar-balanced {
+	box-shadow: 0px 5px 5px gray;
+	text-align: center;
+}
+
+.status-change .upper-body{
+	background-color: #fff;
+	padding-bottom: 20px;
+}
+
+.status-change .lower-body{
+	padding-top: 20px;
+	padding-bottom: 20px;
+	background-color: #69a84f;
+}
+
+.status-change .user-profile-picture{
+	text-align: center;
+}
+
+.status-change .user-profile-picture img{
+	padding: 20px;
+	border-radius: 200px;
+	max-width: 60%;
+}
+
+.status-change .user-status-information{
+	text-align: center;
+}
+
+.status-change .busy-toggle{
+	width: 50%;
+	background-color: #5f98cd;
+	border: 0px;
+	margin: 0px auto;
+	border-radius: 5px;
+}

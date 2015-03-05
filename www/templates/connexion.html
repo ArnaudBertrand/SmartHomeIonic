@@ -1,0 +1,26 @@
+<ion-view title="Connexion" class="connexion">
+  <ion-content>
+    <img ng-src="{{'img/logo.png'}}" />
+    <h3>Connexion</h3>
+    <form novalidate class="connexion-form">
+      <div class="list list-inset">
+        <label class="item item-input">
+          <input type="text" placeholder="Username" ng-model="user.name">
+        </label>
+        <label class="item item-input">
+          <input type="password" placeholder="Password" ng-model="user.password">
+        </label>
+        <label class="item item-input" ng-show="registration">
+          <input type="password" placeholder="Confirm Password" ng-model="user.confirmPassword">
+        </label>
+      </div>
+
+      <div class="submits">
+        <button class="button button-royal" ng-hide="registration" ng-click="setRegistration(true)">Register</button>
+        <input type="submit" class="button button-royal" ng-hide="registration" ng-click="login(user)" value="Connect" />
+        <button class="button button-royal" ng-show="registration" ng-click="setRegistration(false)">Cancel</button>
+        <input type="submit" class="button button-royal" ng-show="registration" ng-click="createUser(user)" value="Register" />
+      </div>
+    </form>
+  </ion-content>
+</ion-view>

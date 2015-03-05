@@ -1,0 +1,26 @@
+.connexion {
+	background-color: #789;
+  margin: 0 auto;
+}
+
+.connexion ion-content{
+  padding-top: 10%;
+  vertical-align: middle;  
+  text-align: center;
+}
+
+.connexion img{
+  width: 60%;
+}
+
+.connexion ion-content h3{
+  color: #fff;
+}
+
+.connexion .button{
+  width: 80%;
+}
+
+.connexion .submits button, .connexion .submits input{
+  width: 45%;
+}

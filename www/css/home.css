@@ -1,0 +1,22 @@
+.home .family-picture {
+	max-width: 100% !important;
+	max-height: 100% !important;
+	border-bottom: 1px solid #777;
+}
+
+.home .bar-balanced {
+	box-shadow: 0px 5px 5px gray;
+	text-align: center;
+}
+
+.home .item.item-avatar-left{
+	border-top-left-radius: 10px !important;
+	border-top-left-radius: 10px !important;
+	background-color: lightgreen;
+
+}
+
+.home .change-status{
+	text-align:center;
+	margin: 10px auto;
+}

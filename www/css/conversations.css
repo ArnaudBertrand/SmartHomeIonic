@@ -1,0 +1,40 @@
+.conversation{
+	background-color: #345;
+}
+
+.conversation .messages {
+  margin:0;
+  padding: 1rem;
+  list-style-type:none;
+}
+.conversation .messages li {
+    display:block; clear:both;
+    max-width:80%;
+    margin:0 0 1rem 0; padding:0;
+}
+.conversation .messages p {
+  border-radius:.75rem;
+  background:#e6e5eb; color:#383641;
+  padding:.6875rem; margin:0;
+  font-size:.875rem;
+}
+.conversation .messages p span {
+	display: block;
+	font-size: 10px;
+	font-weight: light;
+}
+
+.conversation .messages li.mine {
+  float:right;
+}
+.conversation .messages li.mine p {
+  background:#158ffe; color:#fff;
+}
+
+.conversation .messages li.mine p span {
+  text-align: right;
+}
+
+.conversation .item-input-inset{
+	clear: both;
+}
