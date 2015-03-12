@@ -1,0 +1,13 @@
+.sharing {
+  background-color: #0A71B5;
+  margin: 0 auto;
+}
+
+.sharing .bar{
+  text-align: center;
+}
+
+.sharing .bar .icon{
+  font-size: 2em;
+  color: #333;
+}

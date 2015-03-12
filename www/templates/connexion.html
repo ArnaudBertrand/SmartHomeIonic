@@ -1,7 +1,6 @@
 <ion-view title="Connexion" class="connexion">
   <ion-content>
-    <img ng-src="{{'img/logo.png'}}" />
-    <h3>Connexion</h3>
+    <img ng-src="{{'img/logo/logo-white.png'}}" />
     <form novalidate class="connexion-form">
       <div class="list list-inset">
         <label class="item item-input">
@@ -16,10 +15,10 @@
       </div>
 
       <div class="submits">
-        <button class="button button-royal" ng-hide="registration" ng-click="setRegistration(true)">Register</button>
-        <input type="submit" class="button button-royal" ng-hide="registration" ng-click="login(user)" value="Connect" />
-        <button class="button button-royal" ng-show="registration" ng-click="setRegistration(false)">Cancel</button>
-        <input type="submit" class="button button-royal" ng-show="registration" ng-click="createUser(user)" value="Register" />
+        <button class="button" ng-hide="registration" ng-click="setRegistration(true)">Register</button>
+        <input type="submit" class="button" ng-hide="registration" ng-click="login(user)" value="Connect" />
+        <button class="button" ng-show="registration" ng-click="setRegistration(false)">Cancel</button>
+        <input type="submit" class="button" ng-show="registration" ng-click="createUser(user)" value="Register" />
       </div>
     </form>
   </ion-content>

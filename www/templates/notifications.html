@@ -1,0 +1,20 @@
+<ion-view title="Notifications" class="notifications">
+  <ion-content>
+    <ul class="notifications-list">
+      <li class="notification" ng-repeat="notif in notifications" on-swipe-right="onSwipeRight(notif._id)" 
+          ng-class="{'person': {{notif | isPersonType }},'message': {{notif | isMessageType }}}">
+        <div class="notification-type">
+          <i class="icon" ng-class="{'ion-person': {{notif | isPersonType }},'ion-chatboxes': {{notif | isMessageType }}}"></i>
+        </div>
+        <div class="notification-text">
+          <p>{{notif.text}} -- {{notif.type}} --  {{notif._id}}</p>
+        </div>
+      </li>
+    </ul>
+    <p>{{testing}}</p>
+    <p>
+      <button ng-click="enter()">Enter</button>
+      <button ng-click="leave()">Leave</button>
+      <button ng-click="move()">Move Animation</button></p>
+  </ion-content>
+</ion-view>

@@ -1,5 +1,5 @@
 .connexion {
-	background-color: #789;
+  background-color: #00622D;
   margin: 0 auto;
 }
 
@@ -13,14 +13,34 @@
   width: 60%;
 }
 
-.connexion ion-content h3{
+.connexion .button{
+  width: 80%;
+  background-color: #f19300;
+  border: none;
+  border-radius: 10px;
   color: #fff;
 }
 
-.connexion .button{
-  width: 80%;
+.connexion .button:active{
+  background-color: #c17100;
 }
 
 .connexion .submits button, .connexion .submits input{
   width: 45%;
+}
+
+.connexion *::-webkit-input-placeholder {
+    color: #000;
+}
+.connexion *:-moz-placeholder {
+    /* FF 4-18 */
+    color: #000;
+}
+.connexion *::-moz-placeholder {
+    /* FF 19+ */
+    color: #000;
+}
+.connexion *:-ms-input-placeholder {
+    /* IE 10+ */
+    color: #000;
 }

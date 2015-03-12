@@ -1,9 +1,4 @@
 <ion-view title="Conversation" class="conversation">
-  <ion-header-bar class="bar-balanced">
-    <button class="button button-clear icon ion-chevron-left" ui-sref="home"></button>
-    <h1 class="title">House Chat</h1>
-  </ion-header-bar>
-
   <ion-content>
     <ul class="messages">
       <li class="message" ng-repeat="mess in messages" ng-class="{'mine': {{mess.author | isMine}}}">

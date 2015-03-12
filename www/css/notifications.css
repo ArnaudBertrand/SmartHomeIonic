@@ -1,0 +1,64 @@
+.notifications{
+  background-color: #0A71B5;
+  width: 100%;
+}
+
+.notifications .notifications-list{
+	padding-top: 20px;
+}
+
+.notifications .notification{
+  margin-top: 5px;
+  margin-bottom: 5px;
+  padding: 5px 10px;
+  color: #fff;
+}
+
+.notifications .notification.person{
+  background-color: #b84147;
+}
+
+.notifications .notification.message{
+  background-color: #009EDF;
+}
+
+.notifications .notification-type{
+  display: inline-block;
+  width: 40px;
+  height: 40px;
+  color: #fff;
+  text-align: center;
+  line-height: 40px;
+  vertical-align: top;
+  margin-right: 15px;
+}
+
+.notification-type i{
+  font-size: 30px;
+}
+
+.notifications .notification-text{
+  display: inline-block;
+  width: 70%;
+  font-size: 1.15em;
+}
+
+.ng-enter {
+  -webkit-transition: 1s;
+  transition: 1s;  
+  transform:translateX(-100%);
+}
+
+.ng-enter-active {
+  transform:none;
+}
+
+.ng-leave {
+  -webkit-transition: 1s;
+  transition: 1s;  
+  margin-left: 0;
+}
+
+.ng-leave-active {
+  transform:translateX(100%);
+}
