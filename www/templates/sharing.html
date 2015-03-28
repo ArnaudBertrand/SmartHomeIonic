@@ -5,5 +5,14 @@
       <div class="col"><i class="icon ion-camera"></i></div>
       <div class="col"><i class="icon ion-images"></i></div>
     </div>
+    <div class="galleries">
+	    <div class="gallery" ng-repeat="gallery in galleries">
+	    	<img ng-src="{{gallery.img}}" ></img>
+		    <p class="info date">{{ gallery.creationDate | date }}</p>
+		    <p class="info title">
+		    	{{ gallery.name | date }} - {{ gallery.photos }} Photos, {{ gallery.videos }} Videos
+		    </p>
+	    </div>
+	</div>
   </ion-content>
 </ion-view>

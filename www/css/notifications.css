@@ -43,22 +43,22 @@
   font-size: 1.15em;
 }
 
-.ng-enter {
+.notifications .ng-enter {
   -webkit-transition: 1s;
   transition: 1s;  
   transform:translateX(-100%);
 }
 
-.ng-enter-active {
+.notifications .ng-enter-active {
   transform:none;
 }
 
-.ng-leave {
+.notifications .ng-leave {
   -webkit-transition: 1s;
   transition: 1s;  
   margin-left: 0;
 }
 
-.ng-leave-active {
+.notifications .ng-leave-active {
   transform:translateX(100%);
 }

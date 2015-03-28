@@ -1,12 +1,40 @@
+/** Layout **/
 .conversation{
-	background-color: #345;
+	background-color: #f6f6f6;
 }
+
+.has-bottom{
+  bottom:109px !important;
+}
+
+/** Messages **/
 
 .conversation .messages {
   margin:0;
   padding: 1rem;
   list-style-type:none;
 }
+
+.conversation .messages .img{
+  vertical-align: top;
+  width: 20%;
+  display: inline-block;
+}
+
+.conversation .messages .img img{
+  max-width: 100%;
+  border-radius: 100%;
+}
+
+.conversation .messages .message-text{
+  vertical-align: top;
+  width: 75%;
+  display: inline-block;
+  padding: 15px;
+  background-color: #9cd;
+  border-radius: 5px;
+}
+/**
 .conversation .messages li {
     display:block; clear:both;
     max-width:80%;
@@ -33,8 +61,21 @@
 
 .conversation .messages li.mine p span {
   text-align: right;
+} **/
+
+/** Send message **/
+.conversation .send-message{
+  position: absolute;
+  bottom: 49px;
+  width: 100%;
+  background-color: #c5c6c7;
 }
 
-.conversation .item-input-inset{
-	clear: both;
+.conversation .send-message i{
+  font-size: 2.5em;
+}
+
+.conversation .send-message label{
+  margin-left: 20px;
+  margin-right: 15px;
 }

@@ -1,17 +1,17 @@
 <ion-view title="Home" class="home">
   <ion-content>
-    <img class="family-picture" src="img/family.png" />
+    <img class="family-picture" src="img/family.jpg" />
 
     <div class="change-status">
-      <button class="button button-positive" ui-sref="status-change">
-        Change my status
+      <button class="button" ui-sref="status-change">
+        Edit status
       </button>
     </div>
 
     <div class="list">
-      <a class="item item-avatar" href="#" ng-repeat="user in users">
-        <img data-ng-src="{{user.img}}" />
-        <h2>{{user.name}}</h2>
+      <a class="item item-avatar" href="#" ng-repeat="user in users" ng-class="{busy: {{user.busy}}}">
+        <img ng-src="{{user.img}}" />
+        <h2>{{user.name}} <i class="icon ion-minus-circled" ng-show="user.busy"></i></h2>
         <p>{{user.status}}</p>
       </a>
     </div>

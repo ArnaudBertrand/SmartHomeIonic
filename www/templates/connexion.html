@@ -18,8 +18,9 @@
         <button class="button" ng-hide="registration" ng-click="setRegistration(true)">Register</button>
         <input type="submit" class="button" ng-hide="registration" ng-click="login(user)" value="Connect" />
         <button class="button" ng-show="registration" ng-click="setRegistration(false)">Cancel</button>
-        <input type="submit" class="button" ng-show="registration" ng-click="createUser(user)" value="Register" />
+        <input type="submit" class="button" ng-show="registration" ng-click="register(user)" value="Register" />
       </div>
+      <p>{{errorMsg}}</p>
     </form>
   </ion-content>
 </ion-view>

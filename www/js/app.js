@@ -1,4 +1,4 @@
-angular.module("sh", ["ionic",'sh.controllers','sh.services','sh.animations','ui.router','ngCordova', 'ngTouch'])
+angular.module("sh", ["ionic",'sh.controllers','sh.services','sh.animations','ui.router','ngCordova', 'ngTouch', 'firebase'])
 
 .run(function($ionicPlatform){
   $ionicPlatform.ready(function(){
@@ -13,6 +13,13 @@ angular.module("sh", ["ionic",'sh.controllers','sh.services','sh.animations','ui
 
 .config(function($stateProvider, $urlRouterProvider){
   $stateProvider
+  
+  .state('calendar', {
+    url: '/calendar',
+    templateUrl: 'templates/calendar.html',
+    controller: 'CalendarCtrl'
+  })
+
   .state('connexion', {
     url: '/connexion',
     templateUrl: "templates/connexion.html",
@@ -31,10 +38,22 @@ angular.module("sh", ["ionic",'sh.controllers','sh.services','sh.animations','ui
     controller: 'HomeCtrl'
   })
 
-  .state('house-plan', {
-    url: '/house-plan',
-    templateUrl: 'templates/house-plan.html',
-    controller: 'HousePlanCtrl'
+  .state('houseChoice', {
+    url: '/houseChoice',
+    templateUrl: "templates/house-choice.html",
+    controller: 'HouseChoiceCtrl'
+  })
+
+  .state('houseCreate', {
+    url: '/houseCreate',
+    templateUrl: "templates/house-create.html",
+    controller: 'HouseCreateCtrl'
+  })
+
+  .state('houseSearch', {
+    url: '/houseSearch',
+    templateUrl: "templates/house-search.html",
+    controller: 'HouseSearchCtrl'
   })
 
   .state('menu', {

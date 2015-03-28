@@ -1,0 +1,27 @@
+<ion-view title="HouseCreate" class="house-create">
+  <ion-content>
+    <h4 class="list-title" ng-show="houses">
+      Create a house
+    </h3>
+    <button class="button btn-action size-l" ng-click="cancel()">Cancel</button>
+    <div class="panel size-l">
+      <div class="field size-l">
+        <p>Pick an ID:</p>
+        <input type="text" placeholder="Unique ID of your house" ng-model="house.id"/>
+        <p class="error" ng-show="error.id">{{error.id}}</p>
+        <p>This ID should be unique, it will be used in order to find your house.</p>
+      </div>
+      <div class="field  size-l">
+        <p>Choose a name:</p>
+        <input type="text" placeholder="The name of your house" ng-model="house.name"/>
+        <p class="error" ng-show="error.name">{{error.name}}</p>
+      </div>
+      <div class="field  size-l">
+        <p>Your city:</p>
+        <input type="text" placeholder="Name of your city" ng-model="house.city"/>
+        <p class="error" ng-show="error.city">{{error.city}}</p>
+      </div>
+      <button class="button btn-action size-l" ng-click="createHouse()">Create</button>
+    </div>
+  </ion-content>
+</ion-view>

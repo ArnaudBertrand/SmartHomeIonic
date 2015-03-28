@@ -1,16 +1,28 @@
 <ion-view title="Conversation" class="conversation">
-  <ion-content>
+  <ion-content class="has-bottom">
     <ul class="messages">
-      <li class="message" ng-repeat="mess in messages" ng-class="{'mine': {{mess.author | isMine}}}">
-        <p>{{mess.text}}<span>{{mess.author}}</span></p>
+      <li class="message" ng-repeat="mess in messages" ng-hide="{{mess.author | isMine}}">
+        <div class="img"><img ng-src="{{mess.author.img}}"></img></div>
+        <p class="message-text">{{mess.text}}
+          <br /><span class="message-info">{{mess.author.name}} - {{mess.date | date}}</span>
+        </p>
+      </li>
+      <li class="message" ng-repeat="mess in messages" ng-show="{{mess.author | isMine}}">
+        <p class="message-text">{{mess.text}}
+          <br /><span class="message-info">{{mess.author.name}} - {{mess.date | date}}</span>
+        </p>
+        <div class="img"><img ng-src="{{mess.author.img}}"></img></div>
       </li>
     </ul>
 
+  </ion-content>
+  <div class="send-message">
     <div class="item-input-inset">
+      <i class="icon ion-paperclip"></i>
       <label class="item-input-wrapper">
         <input type="text" placeholder="Type your message" ng-model="message.text" />
       </label>
-      <button class="button button-clear" ng-click="addMessage()">Send</button>
+      <i class="icon ion-paper-airplane" ng-click="addMessage()"></i>
     </div>
-  </ion-content>
+  </div>
 </ion-view>

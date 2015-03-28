@@ -1,6 +1,5 @@
 .sharing {
   background-color: #0A71B5;
-  margin: 0 auto;
 }
 
 .sharing .bar{
@@ -10,4 +9,44 @@
 .sharing .bar .icon{
   font-size: 2em;
   color: #333;
+}
+
+.sharing .galleries{
+  padding-top: 44px;
+}
+
+.sharing .gallery{
+	max-height: 20% !important; 
+	width: 100%;
+	overflow: hidden;
+	position: relative;
+	margin: 0px;
+	padding: 0px;
+}
+
+.sharing .gallery img{
+	width: 100%;
+	margin: 0px;
+}
+
+.sharing .gallery .info{
+  position: absolute;
+  background: #000;
+  color: #fff;
+  opacity: 0.7;
+  font-style: italic;
+  padding: 2px 10px 2px 10px;
+}
+
+.sharing .gallery .date{
+  top: 0;
+  left: 0;
+  border-bottom-right-radius: 5px;
+}
+
+.sharing .gallery .title{
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  border-top-right-radius: 5px;
 }

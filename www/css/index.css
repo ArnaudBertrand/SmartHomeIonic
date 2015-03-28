@@ -1,0 +1,35 @@
+ion-content {
+  bottom:49px !important;
+}
+
+/** Buttons **/
+.button{
+  border: none;
+  border-radius: 10px;	
+}
+
+.button.btn-action{
+  background-color: #f19300;
+  color: #fff;
+}
+.button.btn-action:active{
+  background-color: #c17100;
+}
+
+.button.btn-dark{
+  background-color: #3D3C40;
+  color: #fff;
+}
+.button.btn-action:active{
+  background-color: #3D3C40;
+}
+
+/** Width **/
+.size-full{
+  width: 100%;
+}.size-l {
+  width: 80%;
+}
+.size-m{
+  width: 50%;
+}

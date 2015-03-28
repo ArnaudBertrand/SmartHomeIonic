@@ -21,7 +21,8 @@
 .status-change .user-profile-picture img{
 	padding: 20px;
 	border-radius: 200px;
-	max-width: 60%;
+	width: 200px;
+	height: 200px;
 }
 
 .status-change .user-status-information{

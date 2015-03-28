@@ -1,0 +1,47 @@
+/** Main **/
+.house-choice {
+  background-color: #c5c6c7;
+  margin: 0 auto;
+}
+
+.house-choice ion-content{
+  padding-top: 10%;
+  text-align: center;
+}
+
+/** House list **/
+.house-choice .list-title {
+  border-top: 1px solid #030303;
+  text-align: left;
+  background-color: #c5c6c7;
+  color: #030303;
+  padding-top: 5px;
+  padding-left: 16px;
+  margin-bottom: 2px;
+}
+
+.house-choice .list .item.item-divider{
+  background-color: #3d3c40;
+  color: #fcfcfc;
+  border-color: #030303;
+  padding-top: 15px;
+  padding-bottom: 15px;
+}
+
+.house-choice .house-details{
+  margin: 0px auto;
+  text-align: left;
+}
+
+.house-choice .house-details button{
+  margin-top: 10px;
+}
+
+.house-choice .top img{
+  max-height: 20%;
+  max-width: 20%;
+}
+
+.house-choice .manage-house button{
+  margin-top: 10px;
+}

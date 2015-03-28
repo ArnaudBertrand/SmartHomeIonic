@@ -1,0 +1,41 @@
+/** Main **/
+.house-create {
+  background-color: #c5c6c7;
+  margin: 0 auto;
+}
+
+.house-create ion-content{
+  padding-top: 10%;
+  text-align: center;
+}
+
+/** Find a house **/
+.house-create .panel{
+  padding-top: 10px;
+  padding-bottom: 10px;
+  background-color: #9ff;
+  margin: 10px auto;
+  border-radius: 3px;
+}
+
+.house-create .panel .field{
+  margin: 0px auto;
+  margin-bottom: 15px;
+}
+.house-create .panel p{
+  text-align: justify;
+  margin-bottom: 0px;
+}
+
+.house-create .panel p.error{
+  color: red;
+  margin-bottom: 5px;
+}
+
+.house-create .panel input{
+  border: 1px solid #777;
+  border-radius: 5px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+

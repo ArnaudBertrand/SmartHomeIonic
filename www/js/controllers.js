@@ -12,7 +12,16 @@ angular.module('sh.controllers', [])
     });
 })
 
-.controller('ConnexionCtrl', function($scope, $log, $state, User, Menu){
+.controller('CalendarCtrl', function($scope, $ionicLoading, Menu){
+  Menu.show();
+  $('#calendar').fullCalendar({
+    dayClick: function() {
+        alert('a day has been clicked!');
+    }
+  });
+})
+
+.controller('ConnexionCtrl', function($scope, $log, $state, UserConnected, Menu){
   Menu.hide();
   $scope.user = { 
     name: '',
@@ -21,11 +30,31 @@ angular.module('sh.controllers', [])
   }
 
   $scope.registration = false;
+  $scope.errorMsg = '';
   
   // Log in the user
   $scope.login = function (user) {
-    User.login(user);
-    $state.go('home');
+    UserConnected.login(user).then(function(success){
+      if(success){
+        $state.go('houseChoice');
+      } else{
+        $scope.errorMsg = 'Wrong username or password';
+      }
+    });
+  };
+
+  $scope.register = function(user){
+    if(user.password === user.confirmPassword){
+      UserConnected.register(user).then(function(registred){
+        if(registred){
+          $scope.login(user);
+        } else {
+          $scope.errorMsg = 'Username already in use';
+        }
+      });
+    } else {
+      $scope.errorMsg = 'Passwords not matching';
+    }
   };
 
   // Set registrations
@@ -34,30 +63,24 @@ angular.module('sh.controllers', [])
   };
 })
 
-.controller('ConversationCtrl', function($scope, $log, Menu){
+.controller('ConversationCtrl', function($scope, $log, Menu, UserConnected, Conversation){
   Menu.show();
   $scope.messages = [];
-  $scope.messages.push({author: "Papa", text: "I love this app"});
-  $scope.messages.push({author: "PP", text: "I like to move it move it"});
-  $scope.messages.push({author: "Pauline", text: "I am cooking"});
-  $scope.messages.push({author: "Kivi", text: "#JeSuisCharlie"});
+  $scope.messages = Conversation.getMessages();
 
   $scope.message = {};
-
   $scope.addMessage = function(){
-    $scope.message.author = $scope.user.name;
-    $scope.messages.push($scope.message);
+    $scope.message.author = UserConnected.getId();;
+    $scope.message.date = Date.now();
+    Conversation.addMessage($scope.message);
     $scope.message = {};
   }
 })
 
-.controller('HomeCtrl', function($scope, $ionicLoading, Menu) {
+.controller('HomeCtrl', function($scope, $ionicLoading, Menu, Family) {
   Menu.show();
   $scope.users = [];
-  $scope.users.push({name: "Papa", img: "img/papa.jpg", icon:"busy", status:"I love this app"});
-  $scope.users.push({name: "PP", img:"img/pp.png", icon:"busy", status:"I like to move it move it"});
-  $scope.users.push({name: "Pauline", img:"img/pauline.jpg", icon:"busy", status:"I am cooking"});
-  $scope.users.push({name: "Kivi", img:"img/kivi.jpeg", icon:"busy", status:"#JeSuisCharlie"});
+  $scope.users = Family.getFamily();
 })
 
 .controller('MenuCtrl', function($scope, $ionicLoading, Menu) {
@@ -94,7 +117,115 @@ angular.module('sh.controllers', [])
     });
   };
 })
-.controller('ProfilePictureCtrl',function($scope, $ionicPopup, $cordovaCamera, $cordovaImagePicker, User) {
+
+.controller('HouseChoiceCtrl', function($scope, $state, $ionicLoading, UserConnected, Houses, Menu) {
+  Menu.hide();
+  $scope.houses = {};
+  UserConnected.getHouses().then(function(houses){
+    $scope.houses = houses;
+  });
+
+  var houseSelected = 0;
+
+  $scope.connect = function (houseid){
+    UserConnected.connect(houseid);
+    $state.go('home');
+  }
+
+  $scope.createHouse = function(){
+    $state.go('houseCreate');
+  }
+
+  $scope.isHouseSelected = function (index){
+    return houseSelected === index;
+  }
+
+  $scope.searchHouse = function(){
+    $state.go('houseSearch');
+  }
+
+  $scope.setHouseSelected = function (index){
+    houseSelected = index;
+  }
+})
+
+.controller('HouseCreateCtrl', function($scope, $state, $ionicLoading, Houses, Menu) {
+  Menu.hide();
+  $scope.house = {id: '', name: '', city: ''};
+  $scope.error = {};
+
+  $scope.cancel = function(){
+    $state.go('houseChoice');
+  }
+
+  $scope.createHouse = function (){
+    $scope.error = {};
+    if($scope.house.id === ''){
+      $scope.error.id = 'Please enter an ID for your house.';
+    }
+
+    if($scope.house.name === ''){
+      $scope.error.name = 'Please enter a house name.';
+    }
+
+    if($scope.house.city === ''){
+      $scope.error.city = 'Please enter city name.';
+    }
+
+    if(_.size($scope.error) === 0){
+      Houses.find($scope.house.id).then(function(checkHouse){
+        if(checkHouse.$value === null){
+          Houses.createHouse($scope.house)
+          $state.go('houseChoice');
+        } else {
+          $scope.error.id = 'ID already used';
+        }
+      });
+    }
+  }
+})
+
+.controller('HouseSearchCtrl', function($scope, $state, Houses, Menu) {
+  Menu.hide();
+  $scope.search = { id: ''};
+  $scope.error = {};
+
+  var requested = false;
+
+  $scope.cancel = function(){
+    $state.go('houseChoice');
+  }
+
+  $scope.searchHouse = function (){
+    $scope.error = {};
+    $scope.house = null;
+    Houses.find($scope.search.id).then(function(checkHouse){
+      if(checkHouse.$value === null){
+        $scope.error.id = 'ID not found';
+      } else {
+        $scope.house = checkHouse;
+      }
+    });
+  }
+
+  $scope.hasBeenRequested = function(){
+    return requested;
+  }
+
+  $scope.requestHouse = function(){
+    if($scope.house.id){
+      Houses.request($scope.house.id);      
+      requested = true;
+    }
+  }
+
+  $scope.afterRequest = function (){
+    requested = false;
+    $state.go('houseChoice');
+  }
+})
+
+.controller('ProfilePictureCtrl',function($scope, $ionicPopup, $cordovaCamera, $cordovaImagePicker, UserConnected) {
   // Triggered on a button click, or some other target
   $scope.showPopup = function() {
     // An elaborate, custom popup
@@ -129,6 +260,7 @@ angular.module('sh.controllers', [])
        $cordovaImagePicker.getPictures(options)
        .then(function (results) {
           $scope.user.img = results[0];
+           UserConnected.setProfilePicture(results[0]);
         }, function(error) {
           // error getting photos
         });
@@ -152,6 +284,7 @@ angular.module('sh.controllers', [])
 
          $cordovaCamera.getPicture(options).then(function(imageURI) {
           $scope.user.img = "data:image/jpeg;base64," + imageURI;
+          UserConnected.setProfilePicture("data:image/jpeg;base64," + imageURI);
         }, function(err) {
          $scope.imgUri = "not working :(";
            $scope.img = err;
@@ -164,26 +297,34 @@ angular.module('sh.controllers', [])
 
 .controller('SharingCtrl', function($scope, $ionicLoading, Menu){
   Menu.show();
+  $scope.galleries = [];
+  $scope.galleries.push({name: "All albums", img: "img/sharing/little-girl.jpg", creationDate: Date.now()});
+  $scope.galleries.push({name: "France tour", img: "img/sharing/paris.jpg", creationDate: Date.now()});
+  $scope.galleries.push({name: "Italy tour", img: "img/sharing/rome.jpg", creationDate: Date.now()});
 })
 
-.controller('StatusCtrl', function($scope, $ionicLoading, User){
-  $scope.user = User.getCurrent();
+.controller('StatusCtrl', function($scope, $ionicLoading, UserConnected){
+  $scope.user = {}
+  UserConnected.get().then(function(user){
+    $scope.user = user;
+  });
+
   $scope.whereami = '0';
 
   $scope.toggleBusy = function(){
-    $scope.user = User.toggleBusy();
+    $scope.user = UserConnected.toggleBusy();
   }
 })
 
-.filter('isMine', function (User) {
+.filter('isMine', function (UserConnected) {
   return function (input) {
-    return User.getCurrent().name === input;
+    return UserConnected.get().name === input.name;
   };
 })
 
-.filter('isNotMine', function (User) {
+.filter('isNotMine', function (UserConnected) {
   return function (input) {
-    return User.getCurrent().name !== input;
+    return UserConnected.get().name !== input;
   };
 })
 
