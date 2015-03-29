@@ -18,19 +18,51 @@ angular.module('sh.services', [])
   }
 })
 
-.factory('Family', function($window){
+.factory('Family', function($window, $firebaseArray, $firebaseObject, UserConnected, Users){
+  var ref = new Firebase("https://smartfamily.firebaseio.com/houses/");
   var family = [];
   family.push({_id: 0, name: "Papa", img: "img/papa.jpg", busy: 0, status:"I love this app"});
   family.push({_id: 1, name: "PP", img:"img/pp.png", busy: 1, status:"I like to move it move it"});
   family.push({_id: 2, name: "Pauline", img:"img/pauline.jpg", busy: 0, status:"I am cooking"});
   family.push({_id: 3, name: "Kivi", img:"img/kivi.jpeg", busy: 0, status:"#JeSuisCharlie"});
 
+  function acceptFamily(request){
+    var houseId = UserConnected.getHouseId();
+    ref.child(houseId + '/family').push(request.$value);
+    Users.addHouse(request.$value,houseId);
+    ref.child(houseId + '/requests/' + request.$id).remove();
+  }
+
+  function acceptFriend(request){
+    var houseId = UserConnected.getHouseId();
+    ref.child(houseId + '/friends').push(request.$value);
+    Users.addHouse(request.$value,houseId);
+    ref.child(houseId + '/requests/' + request.$id).remove();
+  }
+
   function add(userEntry){
     family.push(userEntry);
   }
 
-  function getFamily(){
-    return family;
+  function getFamilyUsers(){
+    return $firebaseArray(ref.child(UserConnected.getHouseId() + '/family')).$loaded().then(function(users){
+        var usersWithDetails = [];
+        _.each(users, function(user){
+          console.log(user.$value);
+          Users.get(user.$value).then(function(userDetails){
+            usersWithDetails.push(userDetails);
+          });
+        });
+        return usersWithDetails;
+      });
+  }
+
+  function getRequests(){
+    return $firebaseArray(ref.child(UserConnected.getHouseId() + '/requests')).$loaded();
+  }
+
+  function rejectRequest(id){
+    ref.child(UserConnected.getHouseId() + '/requests/' + id).remove();
   }
 
   function size(){
@@ -51,29 +83,36 @@ angular.module('sh.services', [])
 
   return {
     add: add,
-    getFamily: getFamily,
+    acceptFamily: acceptFamily,
+    acceptFriend: acceptFriend,
+    getFamilyUsers: getFamilyUsers,
+    getRequests: getRequests,
+    rejectRequest: rejectRequest,
     size: size,
     update: update
   };
 })
 
-.factory('Houses', function(UserConnected, $firebaseObject, $firebaseArray){
+.factory('Houses', function($firebaseObject, $firebaseArray){
   var ref = new Firebase("https://smartfamily.firebaseio.com/houses/");
+  function addFamily(housetag,userid){
+    ref.child(housetag + '/family').push(userid);
+  }
+
+  function addFriend(housetag,userid){
+    ref.child(housetag + '/friends').push(userid);
+  }
+
   function createHouse(house){
-    house.members = [];
-    if(UserConnected.getId()){
-      UserConnected.get().then(function(curUser){
-        curUser.role = 'admin';
-        house.members = 1;
-        house.friends = 0;
-        ref.child(house.id).set(house);
-        UserConnected.addHouse(house);
-      });
-    }
+    ref.child(house.id).set(house);
   }
 
   function find(housetag){
     return $firebaseObject(ref.child(housetag)).$loaded();
+  }
+
+  function get(id){
+    return $firebaseObject(ref.child(id)).$loaded()
   }
 
   function request(housetag){
@@ -87,8 +126,11 @@ angular.module('sh.services', [])
   }
 
   return {
+    addFamily: addFamily,
+    addFriend:addFriend,
     createHouse: createHouse,
     find: find,
+    get: get,
     request: request
   }
 })
@@ -115,26 +157,46 @@ angular.module('sh.services', [])
   }
 })
 
-.factory('UserConnected', function($window, $firebaseArray, $firebaseObject, Family){
+.factory('UserConnected', function($window, $firebaseArray, $firebaseObject, Users, Houses){
   var ref = new Firebase("https://smartfamily.firebaseio.com/users/");
 
-  function addHouse(house){
+  function addHouse(housetag){
     var id = getId();
     if(id){
-      ref.child(id + '/houses').push(house);
+      Users.addHouse(id,housetag);
+      Houses.addFamily(housetag,id);
     }
+  }
+
+  function changeStatus(status, location){
+    Users.changeStatus(getId(),status,location);
   }
 
   function connect(house){
     $window.localStorage.setItem('currentHouse', house);
   }
 
+  function createHouse(house){
+    if(getId()){
+      Houses.createHouse(house)
+      addHouse(house.id);
+    }
+  }
+
   function get(){
-    return $firebaseObject(ref.child(getId())).$loaded();
+    return Users.get(getId());
   }
 
   function getHouses(){
-    return $firebaseArray(ref.child(getId() + '/houses')).$loaded();
+    return Users.getHouses(getId());
+  }
+
+  function getHouse(){
+    return Houses.get(getHouseId());
+  }
+
+  function getHouseId(){
+    return $window.localStorage.getItem('currentHouse');
   }
 
   function getId(){
@@ -173,26 +235,82 @@ angular.module('sh.services', [])
   }
 
   function setProfilePicture(img){
-    user.img = img;
-    Fanily.update(user);
+    Users.setProfilePicture(getId(),img);
   }
 
   function toggleBusy (){
-    var user = JSON.parse($window.localStorage.getItem('user'));
-    user.busy = 1 - user.busy;
-    Family.update(user);
-    $window.localStorage.setItem('user', JSON.stringify(user));
-    return JSON.parse($window.localStorage.getItem('user'));
+    Users.toggleBusy(getId());
   }
 
   return{
     addHouse: addHouse,
+    changeStatus: changeStatus,
     connect: connect,
+    createHouse: createHouse,
     get: get,
     getHouses: getHouses,
+    getHouse: getHouse,
+    getHouseId: getHouseId,
     getId: getId,
     login: login,
     register: register,
+    setProfilePicture: setProfilePicture,
+    toggleBusy: toggleBusy
+  };
+})
+
+.factory('Users', function($window, Houses, $firebaseArray, $firebaseObject){
+  var ref = new Firebase("https://smartfamily.firebaseio.com/users/");
+
+  function addHouse(id,housetag){
+    ref.child(id + '/houses').push(housetag);
+  }
+
+  function changeStatus(id,status,location){
+    ref.child(id + '/status').set(status);
+    ref.child(id + '/location').set(location);
+  }
+
+  function get(id){
+    return $firebaseObject(ref.child(id)).$loaded();
+  }
+
+  function getHouses(id){
+    return $firebaseArray(ref.child(id + '/houses')).$loaded().then(function(houses){
+        var housesDetails = [];
+        console.log(houses);
+        _.each(houses, function(house){
+          Houses.get(house.$value).then(function(houseDetails){
+            housesDetails.push(houseDetails);
+          });
+        });
+        return housesDetails;
+
+      });
+  }
+
+  function setProfilePicture(id,img){
+    //user.img = img;
+    //Fanily.update(user);
+  }
+
+  function toggleBusy (id){
+    $firebaseObject(ref.child(id + '/busy'))
+      .$loaded()
+      .then(function(busy){
+        if(busy.$value === false){
+          ref.child(id + '/busy').set(true);
+        } else {
+          ref.child(id + '/busy').set(false);
+        }
+      });
+  }
+
+  return{
+    addHouse: addHouse,
+    changeStatus: changeStatus,
+    get: get,
+    getHouses: getHouses,
     setProfilePicture: setProfilePicture,
     toggleBusy: toggleBusy
   };

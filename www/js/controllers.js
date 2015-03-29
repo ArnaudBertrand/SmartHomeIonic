@@ -80,48 +80,16 @@ angular.module('sh.controllers', [])
 .controller('HomeCtrl', function($scope, $ionicLoading, Menu, Family) {
   Menu.show();
   $scope.users = [];
-  $scope.users = Family.getFamily();
-})
-
-.controller('MenuCtrl', function($scope, $ionicLoading, Menu) {
-  Menu.show();
-})
-
-.controller('NotificationsCtrl', function($scope, $ionicLoading, Menu) {
-  Menu.show();
-
-  $scope.notifications = [
-    {_id: '123', text: 'Wow John this is a long text it might be messy.', author: 'John', type:'message'},
-    {_id: '1234', text: 'notif2', author: 'PP', type:'message'},
-    {_id: '255', text: 'notif3', author: 'Michel', type:'person'}
-  ];
-
-  $scope.enter = function(){
-    $scope.notifications.unshift({_id: '45', text: 'new Notif', author: 'Michel', type:'person'});
-  };
-
-  $scope.leave = function(){
-    $scope.onSwipeRight('1234');
-  };
-
-  $scope.move = function(){
-    $scope.notifications[1].text = "Sa mere";
-  };
-
-  $scope.onSwipeRight = function(id){
-    $scope.notifications.forEach(function(e,i){
-      if(e._id == id){
-        $scope.notifications.splice(i,1);
-        return false;
-      }
-    });
-  };
+  Family.getFamilyUsers().then(function(users){
+    $scope.users = users;
+  });
 })
 
 .controller('HouseChoiceCtrl', function($scope, $state, $ionicLoading, UserConnected, Houses, Menu) {
   Menu.hide();
   $scope.houses = {};
   UserConnected.getHouses().then(function(houses){
+    console.log(houses);
     $scope.houses = houses;
   });
 
@@ -149,7 +117,7 @@ angular.module('sh.controllers', [])
   }
 })
 
-.controller('HouseCreateCtrl', function($scope, $state, $ionicLoading, Houses, Menu) {
+.controller('HouseCreateCtrl', function($scope, $state, $ionicLoading, Houses, UserConnected, Menu) {
   Menu.hide();
   $scope.house = {id: '', name: '', city: ''};
   $scope.error = {};
@@ -175,7 +143,7 @@ angular.module('sh.controllers', [])
     if(_.size($scope.error) === 0){
       Houses.find($scope.house.id).then(function(checkHouse){
         if(checkHouse.$value === null){
-          Houses.createHouse($scope.house)
+          UserConnected.createHouse($scope.house)
           $state.go('houseChoice');
         } else {
           $scope.error.id = 'ID already used';
@@ -223,6 +191,62 @@ angular.module('sh.controllers', [])
     requested = false;
     $state.go('houseChoice');
   }
+})
+
+.controller('JoinRequestsCtrl', function($scope, $state, Family, Menu) {
+  Menu.show();
+  $scope.requests = [];
+  
+  Family.getRequests().then(function(reqs){
+    $scope.requests = reqs;
+  });
+
+  $scope.reject = function (request){
+    Family.rejectRequest(request.$id);
+  }
+
+  $scope.acceptFamily = function (request){
+    Family.acceptFamily(request);
+  }
+
+  $scope.acceptFriend = function (request){
+    Family.acceptFriend(request);
+  }
+})
+
+.controller('MenuCtrl', function($scope, $ionicLoading, Menu) {
+  Menu.show();
+})
+
+.controller('NotificationsCtrl', function($scope, $ionicLoading, Menu) {
+  Menu.show();
+
+  $scope.notifications = [
+    {_id: '123', text: 'Wow John this is a long text it might be messy.', author: 'John', type:'message'},
+    {_id: '1234', text: 'notif2', author: 'PP', type:'message'},
+    {_id: '255', text: 'notif3', author: 'Michel', type:'person'}
+  ];
+
+  $scope.enter = function(){
+    $scope.notifications.unshift({_id: '45', text: 'new Notif', author: 'Michel', type:'person'});
+  };
+
+  $scope.leave = function(){
+    $scope.onSwipeRight('1234');
+  };
+
+  $scope.move = function(){
+    $scope.notifications[1].text = "Sa mere";
+  };
+
+  $scope.onSwipeRight = function(id){
+    $scope.notifications.forEach(function(e,i){
+      if(e._id == id){
+        $scope.notifications.splice(i,1);
+        return false;
+      }
+    });
+  };
 })
 
 .controller('ProfilePictureCtrl',function($scope, $ionicPopup, $cordovaCamera, $cordovaImagePicker, UserConnected) {
@@ -295,6 +319,10 @@ angular.module('sh.controllers', [])
   };
 })
 
+.controller('SettingsCtrl', function($scope, $ionicLoading, Menu){
+  Menu.show();
+})
+
 .controller('SharingCtrl', function($scope, $ionicLoading, Menu){
   Menu.show();
   $scope.galleries = [];
@@ -312,7 +340,11 @@ angular.module('sh.controllers', [])
   $scope.whereami = '0';
 
   $scope.toggleBusy = function(){
-    $scope.user = UserConnected.toggleBusy();
+    UserConnected.toggleBusy();
+  }
+
+  $scope.changeStatus = function(){
+    UserConnected.changeStatus($scope.user.status, $scope.user.location);
   }
 })
 

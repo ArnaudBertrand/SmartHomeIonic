@@ -8,7 +8,7 @@
       <div class="item item-toggle busy-toggle">
         Busy
         <label class="toggle toggle-assertive">
-          <input type="checkbox" ng-model="user.busy" ng-checked="user.busy" ng-click="toggleBusy()">
+          <input type="checkbox" ng-checked="user.busy" ng-click="toggleBusy()">
           <div class="track">
             <div class="handle"></div>
           </div>
@@ -21,13 +21,13 @@
         <h3>Currently, I am</h3>
         <div class="list list-inset">
           <label class="item item-input">
-            <input type="text" placeholder="Doing something">
+            <input type="text" ng-model="user.status" placeholder="Doing something">
           </label>
           <label class="item item-input">
-            <input type="text" placeholder="Somewhere">
+            <input type="text" ng-model="user.location" placeholder="Somewhere">
           </label>
         </div>
-        <button class="button button-positive">
+        <button class="button button-positive" ng-click="changeStatus()">
           Change my status
         </button>
       </form>

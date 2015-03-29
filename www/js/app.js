@@ -56,6 +56,12 @@ angular.module("sh", ["ionic",'sh.controllers','sh.services','sh.animations','ui
     controller: 'HouseSearchCtrl'
   })
 
+  .state('joinRequests', {
+    url: '/joinRequests',
+    templateUrl: "templates/join-requests.html",
+    controller: 'JoinRequestsCtrl'
+  })
+
   .state('menu', {
     url: '/menu',
     templateUrl: 'templates/menu.html',
@@ -66,6 +72,12 @@ angular.module("sh", ["ionic",'sh.controllers','sh.services','sh.animations','ui
     url: '/notifications',
     templateUrl: 'templates/notifications.html',
     controller: 'NotificationsCtrl'
+  })
+
+  .state('settings', {
+    url: '/settings',
+    templateUrl: 'templates/settings.html',
+    controller: 'SettingsCtrl'
   })
 
   .state('sharing', {
