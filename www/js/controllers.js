@@ -63,18 +63,37 @@ angular.module('sh.controllers', [])
   };
 })
 
-.controller('ConversationCtrl', function($scope, $log, Menu, UserConnected, Conversation){
+.controller('ConversationCtrl', function($scope, $log, Menu, UserConnected, Family){
   Menu.show();
   $scope.messages = [];
-  $scope.messages = Conversation.getMessages();
+  var family = [];
+
+  Family.getConversation().then(function(mess){
+    $scope.messages = mess;
+  });
+
+  Family.getFamilyUsers().then(function(users){
+    family = users;
+  });
+
+  $scope.getImage = function(author) {
+    var img = '';
+    _.each(family,function(user){
+      if(user.$id === author){
+        img = user.img;
+        return;
+      }
+    });
+    return img;
+  };
 
   $scope.message = {};
   $scope.addMessage = function(){
     $scope.message.author = UserConnected.getId();;
     $scope.message.date = Date.now();
-    Conversation.addMessage($scope.message);
+    Family.sendMessage($scope.message);
     $scope.message = {};
-  }
+  };
 })
 
 .controller('HomeCtrl', function($scope, $ionicLoading, Menu, Family) {
@@ -350,13 +369,13 @@ angular.module('sh.controllers', [])
 
 .filter('isMine', function (UserConnected) {
   return function (input) {
-    return UserConnected.get().name === input.name;
+    return UserConnected.getId() === input;
   };
 })
 
 .filter('isNotMine', function (UserConnected) {
   return function (input) {
-    return UserConnected.get().name !== input;
+    return UserConnected.getId() !== input;
   };
 })
 

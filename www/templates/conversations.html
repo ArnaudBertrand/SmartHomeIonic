@@ -1,17 +1,16 @@
 <ion-view title="Conversation" class="conversation">
   <ion-content class="has-bottom">
     <ul class="messages">
-      <li class="message" ng-repeat="mess in messages" ng-hide="{{mess.author | isMine}}">
-        <div class="img"><img ng-src="{{mess.author.img}}"></img></div>
-        <p class="message-text">{{mess.text}}
-          <br /><span class="message-info">{{mess.author.name}} - {{mess.date | date}}</span>
+      <li class="message" ng-repeat="mess in messages">
+        <p class="message-text"  ng-show="{{mess.author | isMine}}">{{mess.text}}
+          <br /><span class="message-info">{{mess.author}} - {{mess.date | date}}</span>
         </p>
-      </li>
-      <li class="message" ng-repeat="mess in messages" ng-show="{{mess.author | isMine}}">
-        <p class="message-text">{{mess.text}}
-          <br /><span class="message-info">{{mess.author.name}} - {{mess.date | date}}</span>
+        <div class="img">
+          <img ng-show="getImage(mess.author)" ng-src="{{getImage(mess.author)}}"></img>
+        </div>
+        <p class="message-text"  ng-hide="{{mess.author | isMine}}">{{mess.text}}
+          <br /><span class="message-info">{{mess.author}} - {{mess.date | date}}</span>
         </p>
-        <div class="img"><img ng-src="{{mess.author.img}}"></img></div>
       </li>
     </ul>
 

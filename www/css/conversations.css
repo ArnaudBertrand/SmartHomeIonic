@@ -19,10 +19,14 @@
   vertical-align: top;
   width: 20%;
   display: inline-block;
+  text-align: center;
+  margin-right: 5px;
+  margin-left: 5px;
 }
 
 .conversation .messages .img img{
-  max-width: 100%;
+  height: 70px;
+  width: 70px;
   border-radius: 100%;
 }
 
