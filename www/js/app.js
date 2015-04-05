@@ -86,10 +86,16 @@ angular.module("sh", ["ionic",'sh.controllers','sh.services','sh.animations','ui
     controller: 'SharingCtrl'
   })
 
-  .state('status-change', {
-    url: '/status-change',
+  .state('statusChange', {
+    url: '/statusChange',
     templateUrl: 'templates/status-change.html',
     controller: 'StatusCtrl'
+  })
+
+  .state('taskList', {
+    url: '/taskList',
+    templateUrl: 'templates/task-list.html',
+    controller: 'TaskListCtrl'
   });
 
   $urlRouterProvider.otherwise('/connexion');

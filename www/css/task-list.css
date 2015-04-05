@@ -1,0 +1,37 @@
+.task-list{
+  width: 100%;
+}
+
+.task-list .tabs{
+  position: relative;
+  border-top: 0px;
+  background-color: #c5c6c7;
+}
+
+.task-list .tabs .tab-item{
+  color: #000;
+  opacity: 0.8;
+}
+
+.task-list .add-task{
+  margin: 5px auto;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+.task-list .add-task .item{
+  border: 1px solid #777;
+  border-radius: 5px;
+}
+
+.task-list .add-task .button{
+  margin-top: 10px;
+}
+
+.task-list .item .done{
+  text-decoration: line-through;
+}
+
+.task-list .tasks .item-checkbox{
+  width: 80%;
+}

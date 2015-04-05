@@ -1,0 +1,47 @@
+<ion-view title="Menu" class="task-list">
+  <ion-content>
+    <div class="tabs tabs-icon-top">
+      <a class="tab-item" ng-click="removeTasks();">
+        <i class="icon ion-funnel"></i>
+        Filter
+      </a>
+      <a class="tab-item" ng-click="toggleAddTask()">
+        <i class="icon ion-plus"></i>
+        Add
+      </a>
+      <a class="tab-item" ng-click="editTasks()" ng-hide="editing">
+        <i class="icon ion-edit"></i>
+        Edit
+      </a>
+      <a class="tab-item" ng-click="finishEdit()" ng-show="editing">
+        <i class="icon ion-checkmark"></i>
+        Valid Edit
+      </a>      
+      <a class="tab-item" ng-click="removeTasks();">
+        <i class="icon ion-trash-a"></i>
+        Remove
+      </a>
+      <a class="tab-item">
+        <i class="icon ion-checkmark" ng-click="taskDone()"></i>
+        Done
+      </a>
+    </div>
+    <div ng-show="isShowingAddTask" class="list add-task size-l bg-green">
+      <label class="item item-input">
+        <input type="text" placeholder="Task" ng-model="task.text" />
+      </label>
+      <button class="button btn-action size-full" ng-click="addTask()">Send</button>
+    </div>
+    <ul class="list">
+      <li class="item item-checkbox" ng-repeat-start="task in tasks" ng-hide="editing">
+         <label class="checkbox" ng-hide="editing">
+           <input type="checkbox" ng-model="task.selected" />
+         </label>
+         <span ng-class="{done: task.done}">{{task.text}}</span>
+      </li>
+      <li class="item item-input" ng-repeat-end ng-show="editing && task.selected">
+         <input type="text" ng-model="task.text" />
+      </li>
+    </ul>
+  </ion-content>
+</ion-view>

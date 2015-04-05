@@ -1,16 +1,48 @@
 <ion-view title="Menu" class="menu">
   <ion-content>
-    <div class="row">
-      <div class="col"><img ng-src="{{'img/icons/icon-prof.png'}}" /></div>
-      <div class="col"><a ui-sref="calendar"><img ng-src="{{'img/icons/icon-cal.png'}}" /></a></div>
-    </div>
-    <div class="row">
-      <div class="col"><a ui-sref="conversations"><img ng-src="{{'img/icons/icon-mess.png'}}" /></a></div>
-      <div class="col"><a ui-sref="sharing"><img ng-src="{{'img/icons/icon-book.png'}}" /></a></div>
-    </div>
-    <div class="row">
-      <div class="col"><img ng-src="{{'img/icons/icon-loc.png'}}" /></div>
-      <div class="col"><a ui-sref="settings"><img ng-src="{{'img/icons/icon-settings.png'}}" /></a></div>
+    <h3 class="title">Menu</h3>
+    <div class="list">
+
+      <a ui-sref="conversations" class="item item-icon-left" ui-sref="conversations">
+        <i class="icon ion-chatbubbles"></i>
+        Family discussion
+      </a>
+
+      <a class="item item-icon-left" ui-sref="taskList">
+        <i class="icon ion-checkmark"></i>
+        Task list
+      </a>
+
+      <a class="item item-icon-left" ui-sref="calendar">
+        <i class="icon ion-calendar"></i>
+        Calendar
+      </a>
+
+      <a class="item item-icon-left" ui-sref="sharing">
+        <i class="icon ion-images"></i>
+        Album
+      </a>
+
+      <a class="item item-icon-left" ui-sref="statusChange">
+        <i class="icon ion-person"></i>
+        Change status
+      </a>
+
+      <a class="item item-icon-left" ui-sref="houseChoice">
+        <i class="icon ion-home"></i>
+        Change house
+      </a>
+
+      <a class="item item-icon-left" ui-sref="settings">
+        <i class="icon ion-gear-a"></i>
+        House settings
+      </a>
+
+      <a class="item item-icon-left" ui-sref="connexion">
+        <i class="icon ion-power"></i>
+        Logout
+      </a>
+
     </div>
   </ion-content>
 </ion-view>

@@ -1,10 +1,10 @@
-<ion-view title="HouseCreate" class="house-create">
+<ion-view title="HouseCreate" class="house-create bg-green">
   <ion-content>
     <h4 class="list-title" ng-show="houses">
       Create a house
     </h3>
-    <button class="button btn-action size-l" ng-click="cancel()">Cancel</button>
-    <div class="panel size-l">
+    <button class="btn btn-action size-l" ng-click="cancel()">Cancel</button>
+    <div class="panel size-l bg-gray">
       <div class="field size-l">
         <p>Pick an ID:</p>
         <input type="text" placeholder="Unique ID of your house" ng-model="house.id"/>
@@ -21,7 +21,7 @@
         <input type="text" placeholder="Name of your city" ng-model="house.city"/>
         <p class="error" ng-show="error.city">{{error.city}}</p>
       </div>
-      <button class="button btn-action size-l" ng-click="createHouse()">Create</button>
+      <button class="btn btn-action size-l" ng-click="createHouse()">Create</button>
     </div>
   </ion-content>
 </ion-view>

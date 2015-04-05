@@ -2,8 +2,17 @@
   background-color: #0A71B5;
 }
 
-.sharing .button.button-full{
-  margin: 0px;
+.sharing .bar{
+  text-align: center;
+}
+
+.sharing .bar .icon{
+  font-size: 2em;
+  color: #333;
+}
+
+.sharing .galleries{
+  padding-top: 44px;
 }
 
 .sharing .gallery{

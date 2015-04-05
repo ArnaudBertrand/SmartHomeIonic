@@ -13,20 +13,13 @@
   width: 60%;
 }
 
-.connexion .button{
-  width: 80%;
-  background-color: #f19300;
-  border: none;
-  border-radius: 10px;
-  color: #fff;
+.connexion .connexion-form .list{
+  margin: 10px auto;
 }
 
-.connexion .button:active{
-  background-color: #c17100;
-}
-
-.connexion .submits button, .connexion .submits input{
-  width: 45%;
+.connexion .connexion-form .list .item{
+  margin-bottom: 10px;
+  border-radius: 5px;
 }
 
 .connexion *::-webkit-input-placeholder {
@@ -43,4 +36,13 @@
 .connexion *:-ms-input-placeholder {
     /* IE 10+ */
     color: #000;
+}
+
+.connexion .registration-link {
+  margin-top: 10px;
+}
+
+.connexion .registration-link a{
+  cursor:pointer;
+  color: #e99101;
 }

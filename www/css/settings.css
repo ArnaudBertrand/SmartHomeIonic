@@ -1,15 +1,15 @@
-.menu{
+.settings{
   background-color: #0A71B5;
   width: 100%;
 }
 
-.menu h3.title{
+.settings h3.title{
   color:#fff;
   text-align: center;
   padding-top: 5px;
 }
 
-.menu .item{
+.settings .item{
   background-color: #0A71B5;
   color: #fff;
 }

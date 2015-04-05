@@ -1,6 +1,5 @@
 /** Main **/
 .house-create {
-  background-color: #c5c6c7;
   margin: 0 auto;
 }
 
@@ -13,7 +12,6 @@
 .house-create .panel{
   padding-top: 10px;
   padding-bottom: 10px;
-  background-color: #9ff;
   margin: 10px auto;
   border-radius: 3px;
 }

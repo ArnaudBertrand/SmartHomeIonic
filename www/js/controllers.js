@@ -350,8 +350,9 @@ angular.module('sh.controllers', [])
   $scope.galleries.push({name: "Italy tour", img: "img/sharing/rome.jpg", creationDate: Date.now()});
 })
 
-.controller('StatusCtrl', function($scope, $ionicLoading, UserConnected){
-  $scope.user = {}
+.controller('StatusCtrl', function($scope, $ionicLoading, UserConnected, Menu){
+  Menu.show();
+  $scope.user = {};
   UserConnected.get().then(function(user){
     $scope.user = user;
   });
@@ -365,6 +366,70 @@ angular.module('sh.controllers', [])
   $scope.changeStatus = function(){
     UserConnected.changeStatus($scope.user.status, $scope.user.location);
   }
+})
+
+.controller('TaskListCtrl', function($scope, $ionicLoading, Menu){
+  Menu.show();
+  $scope.tasks = [];
+  $scope.task = {};
+
+  $scope.isShowingAddTask = false;
+
+  $scope.toggleAddTask = function (){
+    $scope.isShowingAddTask = $scope.isShowingAddTask ? false: true;
+  }
+
+  $scope.addTask = function(){
+    var random = Math.floor(Math.random()*100000);
+    $scope.task._id = random;
+    $scope.tasks.push($scope.task);
+    $scope.task = {};
+    $scope.isShowingAddTask = false;
+  }
+
+  $scope.removeTasks = function(){
+    var newArray = [];
+    $scope.tasks.forEach(function(task){
+      if(!task.selected){
+        newArray.push(task);
+      }
+    });
+    $scope.tasks = newArray;
+  }
+
+  $scope.taskDone = function(){
+    $scope.tasks.forEach(function(task){
+      if(task.selected){
+        task.done = true;
+      }
+    });
+    console.log('test');
+    resetSelection();
+  }
+
+  $scope.editTasks = function (){
+    $scope.editing = true;
+  }
+
+  $scope.finishEdit = function(){
+    resetSelection();
+    $scope.editing = false;
+  }
+
+  $scope.toggleSelect = function(task){
+    task.selected = task.selected ? false : true;
+  }
+
+  function resetSelection(task){
+    $scope.tasks.forEach(function(task){
+      task.selected = false;
+    });
+  }
+
+  // Test
+  $scope.tasks.push({_id: "id1", text: "Make the laundry", user:'Arnaud', done:true});
+  $scope.tasks.push({_id: "id2", text: "Wash dishes", user:'Emily'});
+  $scope.tasks.push({_id: "id2", text: "Gimme some money !", user:'Emily'});
 })
 
 .filter('isMine', function (UserConnected) {

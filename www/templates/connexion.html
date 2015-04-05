@@ -2,7 +2,7 @@
   <ion-content>
     <img ng-src="{{'img/logo/logo-white.png'}}" />
     <form novalidate class="connexion-form">
-      <div class="list list-inset">
+      <div class="list size-l">
         <label class="item item-input">
           <input type="text" placeholder="Username" ng-model="user.name">
         </label>
@@ -13,14 +13,14 @@
           <input type="password" placeholder="Confirm Password" ng-model="user.confirmPassword">
         </label>
       </div>
+      <p ng-show="errorMsg">{{errorMsg}}</p>
 
       <div class="submits">
-        <button class="button" ng-hide="registration" ng-click="setRegistration(true)">Register</button>
-        <input type="submit" class="button" ng-hide="registration" ng-click="login(user)" value="Connect" />
-        <button class="button" ng-show="registration" ng-click="setRegistration(false)">Cancel</button>
-        <input type="submit" class="button" ng-show="registration" ng-click="register(user)" value="Register" />
+        <button type="submit" class="btn btn-action size-l" ng-hide="registration" ng-click="login(user)">Connect</button>
+        <button class="btn size-m" ng-show="registration" ng-click="setRegistration(false)">Cancel</button>
+        <button type="submit" class="btn btn-action size-m" ng-show="registration" ng-click="register(user)">Register</button>
       </div>
-      <p>{{errorMsg}}</p>
     </form>
+    <p class="registration-link"><a ng-hide="registration" ng-click="setRegistration(true)">Create an account</a></p>
   </ion-content>
 </ion-view>

@@ -1,17 +1,17 @@
-<ion-view title="HouseSearch" class="house-search">
+<ion-view title="HouseSearch" class="house-search bg-green">
   <ion-content>
     <div ng-hide="hasBeenRequested()">
-      <button class="button btn-action size-l" ng-click="cancel()">Cancel</button>
-      <div class="panel size-l">
+      <button class="btn btn-action size-l" ng-click="cancel()">Cancel</button>
+      <div class="panel size-l bg-gray">
         <h3>Find a house</h3>
         <div class="field size-l">
           <input type="text" placeholder="House ID" ng-model="search.id"/>
           <p class="error" ng-show="error.id">{{error.id}}</p>
           <p>You should fill in the unique ID of the house in order to send a request, ask the owner if you do not know it.</p>
         </div>
-        <button class="button btn-action size-l" ng-click="searchHouse()">Find</button>
+        <button class="btn btn-action size-l" ng-click="searchHouse()">Find</button>
       </div>
-      <div ng-show="house" class="panel size-l">
+      <div ng-show="house" class="panel size-l bg-gray">
         <h3>House details</h3>
         <div class="house-details size-l">
           <ul>
@@ -20,16 +20,16 @@
             <li><i class="icon ion-location"></i> {{house.city}}</li>
           </ul>
         </div>
-        <button class="button btn-action size-l" ng-click="requestHouse()">Query to join</button>
+        <button class="btn btn-action size-l" ng-click="requestHouse()">Query to join</button>
       </div>
     </div>
     <div class="after-request" ng-show="hasBeenRequested()">
-      <div class="panel size-l">
+      <div class="panel size-l bg-gray">
         <h3>Request sent</h3>
         <p class="size-l">
           You demand has been accomplished and has been sent to the house. An administrator of the house will decide whether to accept your request or not.
         </p>
-        <button class="button btn-action size-l" ng-click="afterRequest()">Ok</button>
+        <button class="btn btn-action size-l" ng-click="afterRequest()">Ok</button>
       </div>
     </div>
   </ion-content>
