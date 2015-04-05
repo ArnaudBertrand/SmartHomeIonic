@@ -6,6 +6,21 @@
   margin: 0px;
 }
 
+.sharing .create-album{
+  margin: 5px auto;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+.sharing .create-album .item{
+  border: 1px solid #777;
+  border-radius: 5px;
+}
+
+.sharing .create-album .btn{
+  margin-top: 10px;
+}
+
 .sharing .gallery{
 	max-height: 20% !important; 
 	width: 100%;

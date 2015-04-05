@@ -20,6 +20,9 @@ angular.module('sh.services', [])
 
 .factory('Family', function($window, $firebaseArray, $firebaseObject, UserConnected, Users){
   var ref = new Firebase("https://smartfamily.firebaseio.com/houses/");
+  var PATH_ALBUM = '/albums/';
+  var PATH_ALBUMS = '/albums';
+  var PATH_ALBUM_IMGS = '/images';
   var PATH_FAMILY = '/family';
   var PATH_FRIEND = '/friends';
   var PATH_REQUEST = '/requests/';
@@ -38,6 +41,31 @@ angular.module('sh.services', [])
     ref.child(houseId + PATH_FRIEND).push(request.$value);
     Users.addHouse(request.$value,houseId);
     ref.child(houseId + PATH_REQUEST + request.$id).remove();
+  }
+
+  function addAlbumImage(album,img){
+    var houseId = UserConnected.getHouseId();
+    ref.child(houseId + PATH_ALBUM + album + PATH_ALBUM_IMGS).push(img);
+    //ref.child("https://smartfamily.firebaseio.com/houses/first/albums/-Jm9zO2kzdJ9GyzMBlL7/images").push(img);
+  }
+
+  function createAlbum(newalbum){
+    var houseId = UserConnected.getHouseId();
+    newalbum.img = 'img/albums/empty.png';
+    newalbum.creationDate = Date.now();
+    ref.child(houseId + PATH_ALBUM + newalbum.title).set(newalbum);
+  }
+
+  function getAlbum(id){
+    return $firebaseObject(ref.child(UserConnected.getHouseId() + PATH_ALBUM + id)).$loaded();
+  }
+
+  function getAlbums(){
+    return $firebaseArray(ref.child(UserConnected.getHouseId() + PATH_ALBUMS)).$loaded();
+  }
+
+  function getAlbumPictures(id){
+    return $firebaseArray(ref.child(UserConnected.getHouseId() + PATH_ALBUM + id + PATH_ALBUM_IMGS)).$loaded();    
   }
 
   function getFamilyUsers(){
@@ -83,6 +111,11 @@ angular.module('sh.services', [])
   return {
     acceptFamily: acceptFamily,
     acceptFriend: acceptFriend,
+    addAlbumImage: addAlbumImage,
+    createAlbum: createAlbum,
+    getAlbum: getAlbum,
+    getAlbums: getAlbums,
+    getAlbumPictures: getAlbumPictures,
     getFamilyUsers: getFamilyUsers,
     getConversation: getConversation,
     getRequests: getRequests,

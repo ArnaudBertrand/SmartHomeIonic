@@ -12,6 +12,56 @@ angular.module('sh.controllers', [])
     });
 })
 
+.controller('AlbumCtrl', function($scope, $ionicLoading, $stateParams, $cordovaImagePicker, Menu, Family){
+  Menu.show();
+  $scope.galleries = [];
+  $scope.album = { title: 'test'};
+
+  Family.getAlbumPictures($stateParams.id).then(function(pictures){
+    $scope.galleries = pictures;
+  });
+
+  Family.getAlbum($stateParams.id).then(function(album){
+    $scope.album = album;
+  });
+
+  $scope.upload = function (){
+    var options = {
+      quality: 75,
+      targetWidth: 500,
+      targetHeight: 500,
+    };
+
+    $cordovaImagePicker.getPictures(options)
+      .then(function (results) {
+        $scope.uploaded = results;
+        _.each(results, function(img){
+          Family.addAlbumImage($scope.album.$id,img);
+        });
+      }, function(error) {});    
+  }
+
+  $scope.takePicture = function(){
+    var options = {
+        quality: 50,
+        destinationType: Camera.DestinationType.DATA_URL,
+        sourceType: Camera.PictureSourceType.CAMERA,
+        allowEdit: true,
+        encodingType: Camera.EncodingType.JPEG,
+        targetWidth: 200,
+        targetHeight: 200,
+        popoverOptions: CameraPopoverOptions,
+        saveToPhotoAlbum: false,
+        correctOrientation: true
+      };
+
+    $cordovaCamera.getPicture(options).then(function(imageURI) {
+        Family.addAlbumImage($scope.album.title,"data:image/jpeg;base64," + imageURI);
+      }, function(err) {});
+  }
+
+})
+
 .controller('CalendarCtrl', function($scope, $ionicLoading, Menu){
   Menu.show();
   $('#calendar').fullCalendar({
@@ -342,15 +392,36 @@ angular.module('sh.controllers', [])
   Menu.show();
 })
 
-.controller('SharingCtrl', function($scope, $ionicLoading, Menu){
+.controller('SharingCtrl', function($scope, $ionicLoading, $state, Menu, Family){
   Menu.show();
   $scope.galleries = [];
-  $scope.galleries.push({name: "All albums", img: "img/sharing/little-girl.jpg", creationDate: Date.now()});
-  $scope.galleries.push({name: "France tour", img: "img/sharing/paris.jpg", creationDate: Date.now()});
-  $scope.galleries.push({name: "Italy tour", img: "img/sharing/rome.jpg", creationDate: Date.now()});
+  $scope.isCreatingAlbum = false;
+  $scope.newalbum = {};
+
+  //$scope.galleries.push({name: "All albums", img: "img/sharing/little-girl.jpg", creationDate: Date.now()});
+  //$scope.galleries.push({name: "France tour", img: "img/sharing/paris.jpg", creationDate: Date.now()});
+  //$scope.galleries.push({name: "Italy tour", img: "img/sharing/rome.jpg", creationDate: Date.now()});
+  Family.getAlbums().then(function(albums){
+    $scope.galleries = albums;
+    console.log(albums);
+  });
+
+  $scope.createAlbum = function(){
+    Family.createAlbum($scope.newalbum);
+    $scope.isCreatingAlbum = false;
+    $scope.newalbum = {};
+  }
+
+  $scope.creatingAlbum = function (val){
+    $scope.isCreatingAlbum = val;
+  }
+
+  $scope.chooseAlbum = function(album){
+    $state.go('album',{id:album.$id});
+  }
 })
 
-.controller('StatusCtrl', function($scope, $ionicLoading, UserConnected, Menu){
+.controller('StatusCtrl', function($scope, $ionicLoading, $state, UserConnected, Menu){
   Menu.show();
   $scope.user = {};
   UserConnected.get().then(function(user){
@@ -365,6 +436,7 @@ angular.module('sh.controllers', [])
 
   $scope.changeStatus = function(){
     UserConnected.changeStatus($scope.user.status, $scope.user.location);
+    $state.go('home');
   }
 })
 

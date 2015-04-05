@@ -14,6 +14,12 @@ angular.module("sh", ["ionic",'sh.controllers','sh.services','sh.animations','ui
 .config(function($stateProvider, $urlRouterProvider){
   $stateProvider
   
+  .state('album', {
+    url: '/album/:id',
+    templateUrl: 'templates/album.html',
+    controller: 'AlbumCtrl'
+  })
+
   .state('calendar', {
     url: '/calendar',
     templateUrl: 'templates/calendar.html',
