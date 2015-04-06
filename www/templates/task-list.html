@@ -1,9 +1,9 @@
 <ion-view title="Menu" class="task-list">
   <ion-content>
     <div class="tabs tabs-icon-top">
-      <a class="tab-item" ng-click="removeTasks();">
+      <a class="tab-item" ng-click="filterTasks();">
         <i class="icon ion-funnel"></i>
-        Filter
+        <span ng-hide="isFiltering">Filter</span><span ng-show="isFiltering">Done</span>
       </a>
       <a class="tab-item" ng-click="toggleAddTask()">
         <i class="icon ion-plus"></i>
@@ -30,14 +30,23 @@
       <label class="item item-input">
         <input type="text" placeholder="Task" ng-model="task.text" />
       </label>
-      <button class="button btn-action size-full" ng-click="addTask()">Send</button>
+      <button class="btn btn-action size-full" ng-click="addTask()">Send</button>
     </div>
-    <ul class="list">
-      <li class="item item-checkbox" ng-repeat-start="task in tasks" ng-hide="editing">
+    <ul class="list filter" ng-show="isFiltering">
+      <li class="item item-checkbox" ng-repeat="user in family" ng-model="user.filtering" ng-click="filterUser(user.name)">
+        <label class="checkbox">
+          <input type="checkbox">
+        </label>
+        {{user.name}}
+      </li>
+    </ul>    
+    <ul class="list" ng-hide="isFiltering">
+      <li class="item item-checkbox" ng-repeat-start="task in tasks | filter:usersFilter" ng-hide="editing">
          <label class="checkbox" ng-hide="editing">
            <input type="checkbox" ng-model="task.selected" />
          </label>
          <span ng-class="{done: task.done}">{{task.text}}</span>
+         <br /><span class="text-bit-small" ng-repeat="user in task.users">{{user}} </span>
       </li>
       <li class="item item-input" ng-repeat-end ng-show="editing && task.selected">
          <input type="text" ng-model="task.text" />

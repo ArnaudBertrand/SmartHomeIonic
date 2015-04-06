@@ -255,7 +255,7 @@ angular.module('sh.services', [])
           // Add basic informations
           delete user["confirmPassword"];
           user.busy = 0;
-          user.img = 'img/no-profile.jpg';
+          user.img = 'img/profile/no-profile.jpg';
           user.status= 'Just arrived ;)';
           // Add to firebase users
           ref.child(user.name).set(user);

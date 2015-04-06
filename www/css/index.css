@@ -39,6 +39,9 @@ ion-content {
 .text-small{
   font-size: 0.5em;
 }
+.text-bit-small{
+  font-size: 0.8em;
+}
 .text-strong{
   font-weight: bold;
 }

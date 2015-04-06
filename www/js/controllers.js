@@ -461,16 +461,18 @@ angular.module('sh.controllers', [])
   }
 })
 
-.controller('TaskListCtrl', function($scope, $ionicLoading, Menu){
+.controller('TaskListCtrl', function($scope, $ionicLoading, Menu, Family){
   Menu.show();
   $scope.tasks = [];
   $scope.task = {};
-
   $scope.isShowingAddTask = false;
+  $scope.isFiltering = false;
+  $scope.family = [];
+  var filterArray = [];
 
-  $scope.toggleAddTask = function (){
-    $scope.isShowingAddTask = $scope.isShowingAddTask ? false: true;
-  }
+  Family.getFamilyUsers().then(function(users){
+    $scope.family = users;
+  });
 
   $scope.addTask = function(){
     var random = Math.floor(Math.random()*100000);
@@ -478,6 +480,27 @@ angular.module('sh.controllers', [])
     $scope.tasks.push($scope.task);
     $scope.task = {};
     $scope.isShowingAddTask = false;
+  }
+
+  $scope.editTasks = function (){
+    $scope.editing = true;
+  }
+
+  $scope.filterTasks = function(){
+    $scope.isFiltering = !$scope.isFiltering;
+  }
+
+  $scope.filterUser = function(user){
+    if(_.contains(filterArray, user)){
+      filterArray = _.without(filterArray, user);
+    } else {
+      filterArray.push(user);
+    }
+  }
+
+  $scope.finishEdit = function(){
+    resetSelection();
+    $scope.editing = false;
   }
 
   $scope.removeTasks = function(){
@@ -490,6 +513,12 @@ angular.module('sh.controllers', [])
     $scope.tasks = newArray;
   }
 
+  function resetSelection(task){
+    $scope.tasks.forEach(function(task){
+      task.selected = false;
+    });
+  }
+
   $scope.taskDone = function(){
     $scope.tasks.forEach(function(task){
       if(task.selected){
@@ -500,29 +529,33 @@ angular.module('sh.controllers', [])
     resetSelection();
   }
 
-  $scope.editTasks = function (){
-    $scope.editing = true;
-  }
-
-  $scope.finishEdit = function(){
-    resetSelection();
-    $scope.editing = false;
+  $scope.toggleAddTask = function (){
+    $scope.isShowingAddTask = $scope.isShowingAddTask ? false: true;
   }
 
   $scope.toggleSelect = function(task){
     task.selected = task.selected ? false : true;
   }
 
-  function resetSelection(task){
-    $scope.tasks.forEach(function(task){
-      task.selected = false;
-    });
+  $scope.usersFilter = function(task){
+    var success = true;
+    if(filterArray.length){
+      success = false;
+      _.each(filterArray, function(user){
+        if(_.contains(task.users, user)){
+          success = true;
+          return;
+        }
+      });
+    }
+    return success;
   }
 
   // Test
-  $scope.tasks.push({_id: "id1", text: "Make the laundry", user:'Arnaud', done:true});
-  $scope.tasks.push({_id: "id2", text: "Wash dishes", user:'Emily'});
-  $scope.tasks.push({_id: "id2", text: "Gimme some money !", user:'Emily'});
+  $scope.tasks.push({_id: "id1", text: "Make the laundry", users:['Arnaud', 'nico'], done:true});
+  $scope.tasks.push({_id: "id2", text: "Wash dishes", users:['Emily']});
+  $scope.tasks.push({_id: "id2", text: "Kiss grand mummy !", users:['Emily']});
+  $scope.tasks.push({_id: "id2", text: "Wash the car"});
 })
 
 .filter('isMine', function (UserConnected) {
