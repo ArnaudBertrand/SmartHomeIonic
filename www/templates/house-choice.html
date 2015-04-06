@@ -4,14 +4,14 @@
       <img ng-src="{{'img/logo/house-black.png'}}" />
     </div>
 
-    <h4 class="list-title" ng-show="houses">
+    <h4 class="list-title" ng-show="houses.length">
       Pick a house
     </h3>
     <div class="list">
       <div class="item item-divider" ng-repeat-start="house in houses" ng-click="setHouseSelected($index)">
         {{ house.name }}
       </div>
-      <a class="item" href="#" ng-repeat-end ng-show="isHouseSelected($index)">
+      <a class="item item-animate" href="#" ng-repeat-end ng-show="isHouseSelected($index)">
         <div class="house-details size-l">
           <i class="icon ion-location"> {{house.city}}</i><br />
           {{ house.members }} Family members<br />

@@ -1,23 +1,24 @@
 <ion-view title="Sharing" class="album">
   <ion-content>
     <div class="bar bar-header row">
-      <div class="col"><i class="icon ion-person"></i></div>
-      <div class="col"><i class="icon ion-camera"></i></div>
+      <div class="col"><i class="icon ion-chevron-left" ng-click="goBack()"></i></div>
+      <div class="col"><i class="icon ion-camera" ng-click="takePicture()"></i></div>
       <div class="col"><i class="icon ion-images" ng-click="upload()"></i></div>
+      <div class="col"><i class="icon ion-trash-b" ng-click="removePictures()"></i></div>
     </div>
 
 
     <div class="galleries">
       <h3>{{album.title}}</h3>
-      <div class="row" ng-repeat="gallery in galleries" ng-if="$index % 3 === 0">
-        <div class="col col-33" ng-if="$index < galleries.length">
-          <img ng-src="{{galleries[$index].$value}}" />
+      <div class="row" ng-repeat="image in gallery" ng-if="$index % 3 === 0">
+        <div class="col col-33" ng-if="$index < gallery.length">
+          <img ng-src="{{gallery[$index].$value}}" ng-click="showImage($index)"/>
         </div>
-        <div class="col col-33" ng-if="$index+1 < galleries.length">
-          <img ng-src="{{galleries[$index+1].$value}}" />
+        <div class="col col-33" ng-if="$index+1 < gallery.length">
+          <img ng-src="{{gallery[$index+1].$value}}" ng-click="showImage($index+1)"/>
         </div>
-        <div class="col col-33" ng-if="$index+2 < galleries.length">
-          <img ng-src="{{galleries[$index+2].$value}}" />
+        <div class="col col-33" ng-if="$index+2 < gallery.length">
+          <img ng-src="{{gallery[$index+2].$value}}" ng-click="showImage($index+2)"/>
         </div>
       </div>
     </div>

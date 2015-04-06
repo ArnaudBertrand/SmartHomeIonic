@@ -12,33 +12,39 @@ angular.module('sh.controllers', [])
     });
 })
 
-.controller('AlbumCtrl', function($scope, $ionicLoading, $stateParams, $cordovaImagePicker, Menu, Family){
+.controller('AlbumCtrl', function($scope, $ionicLoading, $stateParams, $cordovaImagePicker, $cordovaCamera, $state, $ionicModal, Menu, Family){
   Menu.show();
-  $scope.galleries = [];
+  $scope.gallery = [];
   $scope.album = { title: 'test'};
 
   Family.getAlbumPictures($stateParams.id).then(function(pictures){
-    $scope.galleries = pictures;
+    $scope.gallery = pictures;
   });
 
   Family.getAlbum($stateParams.id).then(function(album){
     $scope.album = album;
   });
 
-  $scope.upload = function (){
-    var options = {
-      quality: 75,
-      targetWidth: 500,
-      targetHeight: 500,
-    };
+  $scope.closeModal = function(){
+    $scope.modal.hide();
+    $scope.modal.remove()
+  }
 
-    $cordovaImagePicker.getPictures(options)
-      .then(function (results) {
-        $scope.uploaded = results;
-        _.each(results, function(img){
-          Family.addAlbumImage($scope.album.$id,img);
-        });
-      }, function(error) {});    
+  $scope.goBack = function (){
+    $state.go('sharing');
+  }
+
+  $scope.showImage = function(index){
+    $scope.activeSlide = index;
+    $scope.showModal('templates/album-image.html');
+  }
+
+  $scope.showModal = function(templateUrl){
+    $ionicModal.fromTemplateUrl(templateUrl, {scope: $scope, animation:'slide-in-up'})
+      .then(function(modal){
+        $scope.modal = modal;
+        $scope.modal.show();
+      });
   }
 
   $scope.takePicture = function(){
@@ -60,6 +66,21 @@ angular.module('sh.controllers', [])
       }, function(err) {});
   }
 
+  $scope.upload = function (){
+    var options = {
+      quality: 75,
+      targetWidth: 500,
+      targetHeight: 500,
+    };
+
+    $cordovaImagePicker.getPictures(options)
+      .then(function (results) {
+        $scope.uploaded = results;
+        _.each(results, function(img){
+          Family.addAlbumImage($scope.album.$id,img);
+        });
+      }, function(error) {});    
+  }
 })
 
 .controller('CalendarCtrl', function($scope, $ionicLoading, Menu){
@@ -162,7 +183,7 @@ angular.module('sh.controllers', [])
     $scope.houses = houses;
   });
 
-  var houseSelected = 0;
+  var houseSelected = -1;
 
   $scope.connect = function (houseid){
     UserConnected.connect(houseid);
@@ -181,8 +202,8 @@ angular.module('sh.controllers', [])
     $state.go('houseSearch');
   }
 
-  $scope.setHouseSelected = function (index){
-    houseSelected = index;
+  $scope.setHouseSelected = function (index){    
+    houseSelected = houseSelected === index ? -1 : index;
   }
 })
 

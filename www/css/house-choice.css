@@ -29,6 +29,7 @@
 }
 
 .house-choice .house-details{
+  margin-top: 15px;
   margin: 0px auto;
   text-align: left;
 }
@@ -44,4 +45,18 @@
 
 .house-choice .manage-house button{
   margin-top: 10px;
+}
+
+.house-choice .item-animate {
+  height: 150px;
+  overflow: hidden;
+  transition: all linear 500ms;
+}
+
+.house-choice .item-animate.ng-hide {
+  height:0px;
+  display: block !important;
+  border: 0px;
+  padding:0px;
+  margin: 0px;
 }
