@@ -1,6 +1,9 @@
 ion-content {
   bottom:49px !important;
 }
+ion-content.no-bottom {
+  bottom:0px !important;
+}
 
 /** Buttons **/
 .btn{
