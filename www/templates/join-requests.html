@@ -1,15 +1,16 @@
-<ion-view title="JoinRequests" class="join-requests">
+<ion-view title="JoinRequests" class="join-requests bg-blue">
   <ion-content>
-    <h3>Join requests</h3>
+    <h3 class="title-white">Join requests</h3>
     <div class="card" ng-repeat="request in requests">
       <div class="item item-divider">
         {{request.$value}}
       </div>
       <div class="item item-text-wrap">
-        <div class="choice">
-          <button class="button btn-action" ng-click="reject(request)">Refuse</button>
-          <button class="button btn-action" ng-click="acceptFamily(request)">Family</button>
-          <button class="button btn-action" ng-click="acceptFriend(request)">Friend</button>
+        <div class="choice row">
+          <div class="col">
+          <button class="btn btn-action size-full" ng-click="acceptFamily(request)">Accept as Family</button>
+          <button class="btn btn-action size-full" ng-click="acceptFriend(request)">Accept as Friend</button>
+          <button class="btn btn-error size-full" ng-click="reject(request)">Refuse</button>
         </div>
       </div>
     </div>

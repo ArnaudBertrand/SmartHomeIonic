@@ -30,12 +30,23 @@ ion-content.no-bottom {
   background-color: #3D3C40;
 }
 
+.btn.btn-error{
+  background-color: red;
+  color: #fff;
+}
+.btn.btn-error:active{
+  background-color: red;
+}
+
 /** Background colors **/
 .bg-green{
   background-color: #00622D;
 }
 .bg-gray{
   background-color: #c5c6c7;
+}
+.bg-blue{
+  background-color: #0A71B5;  
 }
 
 /** Text **/
@@ -53,6 +64,11 @@ ion-content.no-bottom {
 }
 .text-shiny{
   color: #e99101;  
+}
+.title-white{
+  color:#fff;
+  text-align: center;
+  padding-top: 5px;
 }
 
 /** Width **/
