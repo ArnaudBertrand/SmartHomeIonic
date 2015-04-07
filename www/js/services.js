@@ -147,9 +147,7 @@ angular.module('sh.services', [])
     return $firebaseObject(ref.child(id)).$loaded()
   }
 
-  function request(housetag){
-    console.log('test');
-    var userId = UserConnected.getId();
+  function request(housetag, userId){
     $firebaseArray(ref.child(housetag + '/requests')).$loaded().then(function(requests){
       if(!_.contains(requests,userId)){
         ref.child(housetag + '/requests').push(userId);
@@ -266,6 +264,10 @@ angular.module('sh.services', [])
       });
   }
 
+  function requestHouse(housetag){
+    Houses.request(housetag,getId());
+  }
+
   function setProfilePicture(img){
     Users.setProfilePicture(getId(),img);
   }
@@ -286,6 +288,7 @@ angular.module('sh.services', [])
     getId: getId,
     login: login,
     register: register,
+    requestHouse: requestHouse,
     setProfilePicture: setProfilePicture,
     toggleBusy: toggleBusy
   };

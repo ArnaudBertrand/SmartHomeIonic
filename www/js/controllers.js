@@ -243,7 +243,7 @@ angular.module('sh.controllers', [])
   }
 })
 
-.controller('HouseSearchCtrl', function($scope, $state, Houses, Menu) {
+.controller('HouseSearchCtrl', function($scope, $state, Houses, Menu, UserConnected) {
   Menu.hide();
   $scope.search = { id: ''};
   $scope.error = {};
@@ -272,7 +272,7 @@ angular.module('sh.controllers', [])
 
   $scope.requestHouse = function(){
     if($scope.house.id){
-      Houses.request($scope.house.id);      
+      UserConnected.requestHouse($scope.house.id);      
       requested = true;
     }
   }
