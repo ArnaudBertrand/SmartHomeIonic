@@ -48,6 +48,9 @@ ion-content {
 .text-error{
   color: red;
 }
+.text-shiny{
+  color: #e99101;  
+}
 
 /** Width **/
 .size-full{
@@ -57,4 +60,10 @@ ion-content {
 }
 .size-m{
   width: 45%;
+}
+
+/** Links **/
+.link-shiny{
+  cursor:pointer;
+  color: #e99101;
 }

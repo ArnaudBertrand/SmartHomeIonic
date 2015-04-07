@@ -24,14 +24,21 @@
   border-radius: 5px;
 }
 
-.task-list .add-task .btn{
-  margin-top: 10px;
+.task-list .add-task .item .done{
+  text-decoration: line-through;
 }
 
-.task-list .item .done{
-  text-decoration: line-through;
+.task-list .add-task p{
+  text-align: center;
+  margin-top: 10px;
 }
 
 .task-list .tasks .item-checkbox{
   width: 80%;
 }
+
+.task-list .add-task .add-users-task .item{
+  border: 0px;
+  background-color: inherit;
+}
+

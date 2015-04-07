@@ -30,6 +30,16 @@
       <label class="item item-input">
         <input type="text" placeholder="Task" ng-model="task.text" />
       </label>
+      <p class="link-shiny" ng-hide="isAssigningUsers"><a ng-click="addUsersTasks(true)">Assign users</a></p>
+      <p class="link-shiny" ng-show="isAssigningUsers"><a ng-click="addUsersTasks(false)">Cancel</a></p>
+      <ul class="list add-users-task" ng-show="isAssigningUsers">
+        <li class="item item-checkbox text-shiny" ng-repeat="user in family" ng-click="toggleUserTask(user.name)">
+          <label class="checkbox">
+            <input type="checkbox">
+          </label>
+          {{user.name}}
+        </li>
+      </ul>
       <button class="btn btn-action size-full" ng-click="addTask()">Send</button>
     </div>
     <ul class="list filter" ng-show="isFiltering">

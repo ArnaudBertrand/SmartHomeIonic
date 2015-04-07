@@ -419,9 +419,6 @@ angular.module('sh.controllers', [])
   $scope.isCreatingAlbum = false;
   $scope.newalbum = {};
 
-  //$scope.galleries.push({name: "All albums", img: "img/sharing/little-girl.jpg", creationDate: Date.now()});
-  //$scope.galleries.push({name: "France tour", img: "img/sharing/paris.jpg", creationDate: Date.now()});
-  //$scope.galleries.push({name: "Italy tour", img: "img/sharing/rome.jpg", creationDate: Date.now()});
   Family.getAlbums().then(function(albums){
     $scope.galleries = albums;
     console.log(albums);
@@ -464,8 +461,9 @@ angular.module('sh.controllers', [])
 .controller('TaskListCtrl', function($scope, $ionicLoading, Menu, Family){
   Menu.show();
   $scope.tasks = [];
-  $scope.task = {};
+  $scope.task = { text: '', users: []};
   $scope.isShowingAddTask = false;
+  $scope.isAssigningUsers = false;
   $scope.isFiltering = false;
   $scope.family = [];
   var filterArray = [];
@@ -478,8 +476,21 @@ angular.module('sh.controllers', [])
     var random = Math.floor(Math.random()*100000);
     $scope.task._id = random;
     $scope.tasks.push($scope.task);
-    $scope.task = {};
+    $scope.task = { text: '', users: []};
+    $scope.isAssigningUsers = false;
     $scope.isShowingAddTask = false;
+  }
+
+  $scope.addUsersTasks = function(val){
+    $scope.isAssigningUsers = val;
+  }
+
+  $scope.toggleUserTask = function(user){
+    if(_.contains($scope.task.users, user)){
+      $scope.task.users = _.without($scope.task.users, user);
+    } else {
+      $scope.task.users.push(user);
+    }
   }
 
   $scope.editTasks = function (){
